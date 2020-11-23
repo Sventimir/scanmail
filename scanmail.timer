@@ -1,0 +1,9 @@
+[Unit]
+Description=Run scanmail script every 10 minutes.
+
+[Timer]
+Unit=scanmail.service
+OnUnitActiveSec=10min
+
+[Install]
+WantedBy=timers.target
