@@ -15,7 +15,7 @@ class Message():
 
     def __init__(self, path):
         with open(path, 'r') as f:
-            m = PARSER.parse(f)
+            m = self.parser.parse(f)
         for h in self.headers:
             hdr = ''.join((self.decode(chunk) for chunk in decode_header(m[h])))
             setattr(self, h, hdr)
@@ -71,7 +71,7 @@ def main():
     mailboxes = [os.path.join(mailboxes_dir, m, NEW_MAIL_DIR) for m in mailbox_names]
 
     old = set(scan(mailboxes))
-    subprocess.run(('mbsync', '-a'))
+    subprocess.run(SYNC_CMD)
     new = set(scan(mailboxes)) - old
     r = Report((Message(f) for f in new))
     if r.count > 0:
